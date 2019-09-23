@@ -131,7 +131,7 @@ public class MainFragment extends Fragment {
 
     private void recyclerSetup() {
         RecyclerView recyclerView;
-        adapter = new ProductListAdapter(R.layout.product_list_item);
+        adapter = new ProductListAdapter(getLayoutInflater());
         recyclerView = getView().findViewById(R.id.product_recycler);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false);
