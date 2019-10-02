@@ -40,7 +40,7 @@ public class BaseActivity extends AppCompatActivity {
         finishApp();
     }
 
-    private void finishApp() {
+    public void finishApp() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             finishAffinity();
         } else {

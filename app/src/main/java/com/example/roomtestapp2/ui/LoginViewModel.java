@@ -44,8 +44,8 @@ public class LoginViewModel extends AndroidViewModel {
         repository.findLogin();
     }
 
-    void deleteLogin(String idPerm) {
-        repository.deleteLogin(idPerm);
+    void deleteLogin() {
+        repository.deleteLogin();
     }
 
     int getCount() {
