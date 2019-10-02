@@ -3,4 +3,14 @@
     <string name="bt_add">Adicionar</string>
     <string name="bt_find">Buscar</string>
     <string name="bt_delete">Remover</string>
+
+
+    <string name="ed_login">Digite seu id</string>
+    <string name="ed_senha">Digite sua senha</string>botao_voltar
+    <string name="action_cadastrar">Cadastre-se</string>
+    <string name="action_sign_in">Logar</string>
+    <string name="action_sign_up">Cadastrar</string>
+    <string name="botao_voltar">Voltar</string>
+    <string name="action_sign_out">Logout</string>
+
 </resources>

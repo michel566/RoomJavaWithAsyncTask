@@ -1,29 +1,36 @@
 package com.example.roomtestapp2.ui;
 
-import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.inputmethod.InputMethodManager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.roomtestapp2.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setToolbar();
 
         FrameLayout container = findViewById(R.id.container);
         managerFragmentTransaction(container.getId(), MainFragment.newInstance());
+    }
+
+    private void setToolbar() {
+        Toolbar toolbar = findViewById(R.id.app_bar);
+        setSupportActionBar(toolbar);
+        TextView tvToolbar = findViewById(R.id.tv_toolbar);
+        tvToolbar.setText(getApplicationInfo().name);
     }
 
     public void managerFragmentTransaction(int idContainer, Fragment fragment) {
@@ -38,19 +45,22 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    //Habilita o toque fora da activity para esconder o teclado
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.app_menu, menu);
+        return true;
+    }
 
     @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (getCurrentFocus() != null) {
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (imm != null) {
-                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-            }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_sign_out:
+                viewModel.deleteLogin(idPerm);
+                goToSignInActivity(MainActivity.this);
+                return true;
         }
-        return super.dispatchTouchEvent(ev);
+        return super.onOptionsItemSelected(item);
     }
 
 }
-
-

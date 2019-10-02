@@ -6,22 +6,26 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.roomtestapp2.entities.Login;
 import com.example.roomtestapp2.entities.Product;
 
-@Database(entities = {Product.class}, version = 1)
-public abstract class ProductRoomDatabase extends RoomDatabase {
+@Database(entities = {Product.class, Login.class}, version = 1)
+public abstract class AppDatabase extends RoomDatabase {
 
     public abstract ProductDao productDao();
-    private static ProductRoomDatabase INSTANCE;
 
-    static ProductRoomDatabase getDatabase(final Context context) {
+    public abstract LoginDao loginDao();
+
+    private static AppDatabase INSTANCE;
+
+    static AppDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
-            synchronized (ProductRoomDatabase.class) {
+            synchronized (AppDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE =
                             Room.databaseBuilder(context.getApplicationContext(),
-                                    ProductRoomDatabase.class,
-                                    "product_database").build();
+                                    AppDatabase.class,
+                                    "product_database").fallbackToDestructiveMigration().build();
                 }
             }
         }
