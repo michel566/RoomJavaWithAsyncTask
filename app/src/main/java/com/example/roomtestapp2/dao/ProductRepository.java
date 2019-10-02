@@ -17,8 +17,8 @@ public class ProductRepository {
     private ProductDao productDao;
 
     public ProductRepository(Application application) {
-        ProductRoomDatabase db;
-        db = ProductRoomDatabase.getDatabase(application);
+        AppDatabase db;
+        db = AppDatabase.getDatabase(application);
         productDao = db.productDao();
         allProducts = productDao.getAllProducts();
     }
