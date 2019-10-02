@@ -22,6 +22,6 @@ public interface LoginDao {
     @Query("SELECT * FROM login")
     LiveData<Login> getLogin();
 
-    @Query("DELETE FROM login WHERE idPermissionario = :idPerm")
-    void deleteLogin(String idPerm);
+    @Query("DELETE FROM login")
+    void deleteLogin();
 }

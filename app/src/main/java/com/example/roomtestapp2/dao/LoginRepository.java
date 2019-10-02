@@ -25,16 +25,47 @@ public class LoginRepository {
         loginData = getLogin();
     }
 
+    //Insert login
     public void insertLogin(Login login) {
         InsertAsyncTask task = new InsertAsyncTask(loginDao);
         task.execute(login);
     }
 
-    public void deleteLogin(String idPerm) {
-        DeleteAsyncTask task = new DeleteAsyncTask(loginDao);
-        task.execute(idPerm);
+    private static class InsertAsyncTask extends AsyncTask<Login, Void, Void> {
+        private LoginDao asyncTaskDao;
+
+        InsertAsyncTask(LoginDao dao) {
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Login... params) {
+            asyncTaskDao.insertLogin(params[0]);
+            return null;
+        }
     }
 
+    //Delete login to id
+    public void deleteLogin() {
+        DeleteAsyncTask task = new DeleteAsyncTask(loginDao);
+        task.execute();
+    }
+
+    private static class DeleteAsyncTask extends AsyncTask<Void, Void, Void> {
+        private LoginDao asyncTaskDao;
+
+        DeleteAsyncTask(LoginDao dao) {
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            asyncTaskDao.deleteLogin();
+            return null;
+        }
+    }
+
+    //Query and get Login
     public void findLogin() {
         QueryAsyncTask task = new QueryAsyncTask(loginDao);
         task.delegate = this;
@@ -64,41 +95,13 @@ public class LoginRepository {
         this.loginData = login;
     }
 
-    private void asyncFinished(Login result) {
-        resultLogin.setValue(result);
-        setLoginData(result);
-    }
-
     public int getCount() {
         return count;
     }
 
-    private static class InsertAsyncTask extends AsyncTask<Login, Void, Void> {
-        private LoginDao asyncTaskDao;
-
-        InsertAsyncTask(LoginDao dao) {
-            asyncTaskDao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(final Login... params) {
-            asyncTaskDao.insertLogin(params[0]);
-            return null;
-        }
-    }
-
-    private static class DeleteAsyncTask extends AsyncTask<String, Void, Void> {
-        private LoginDao asyncTaskDao;
-
-        DeleteAsyncTask(LoginDao dao) {
-            asyncTaskDao = dao;
-        }
-
-        @Override
-        protected Void doInBackground(final String... params) {
-            asyncTaskDao.deleteLogin(params[0]);
-            return null;
-        }
+    private void asyncFinished(Login result) {
+        resultLogin.setValue(result);
+        setLoginData(result);
     }
 
     private static class QueryAsyncTask extends AsyncTask<Void, Void, Login> {
@@ -120,4 +123,5 @@ public class LoginRepository {
             delegate.asyncFinished(login);
         }
     }
+
 }

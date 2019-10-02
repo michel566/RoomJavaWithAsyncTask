@@ -6,6 +6,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -56,7 +57,8 @@ public class MainActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_sign_out:
-                viewModel.deleteLogin(idPerm);
+                viewModel.deleteLogin();
+                Toast.makeText(this, "Logoff cliado", Toast.LENGTH_SHORT).show();
                 goToSignInActivity(MainActivity.this);
                 return true;
         }
