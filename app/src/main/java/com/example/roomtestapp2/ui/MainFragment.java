@@ -1,14 +1,12 @@
 package com.example.roomtestapp2.ui;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -60,6 +58,7 @@ public class MainFragment extends Fragment {
         Button addButton = getView().findViewById(R.id.bt_add);
         Button findButton = getView().findViewById(R.id.bt_find);
         Button deleteButton = getView().findViewById(R.id.bt_delete);
+        ImageView searchButton = getView().findViewById(R.id.im_searchProduct);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +75,13 @@ public class MainFragment extends Fragment {
                 } else {
                     productId.setText("Incomplete information");
                 }
+            }
+        });
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adapter.getFilter().filter(productName.getText().toString());
             }
         });
 
@@ -131,7 +137,7 @@ public class MainFragment extends Fragment {
 
     private void recyclerSetup() {
         RecyclerView recyclerView;
-        adapter = new ProductListAdapter(getLayoutInflater());
+        adapter = new ProductListAdapter(getContext(),getLayoutInflater());
         recyclerView = getView().findViewById(R.id.product_recycler);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false);
